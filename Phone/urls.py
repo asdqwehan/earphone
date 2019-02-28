@@ -16,12 +16,17 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from django.views.static import serve
 from Phone.settings import MEDIA_ROOT
+from Buyers import views
 
 urlpatterns = [
-    url(r'^media/(?P<path>.*)', serve, {"document_root":MEDIA_ROOT}),
+    url(r'^media/(?P<path>.*)', serve, {"document_root":MEDIA_ROOT}), #MEDIA显示图片的URL
     url(r'^ckeditor/', include('ckeditor_uploader.urls')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^shops/', include('Shops.urls', namespace='Shops')),
     url(r'^buyers/', include('Buyers.urls', namespace='Buyers')),
-    
+    url(r'^$', views.index, name='index'),
+    url(r'^index/$', views.index, name='index'),
+    url(r'^login/$', views.login, name='login'),
+    url(r'^products/$', views.products, name='products'),
+    url(r'^product_details/$', views.product_details, name='product_details'),
 ]
