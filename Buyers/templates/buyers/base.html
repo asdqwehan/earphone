@@ -323,6 +323,27 @@
 	<script src="plugins/bootstrap/bootstrap.min.js"></script>
 
 	<script src="js/global.js"></script>
+	<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+<script>
+    $(function () {
+        $('#zemail').click(function () {
+            email = $('#email').val();
+            $.ajax(
+                {
+                    url:'/sendmessage/?email='+email,
+                    type:'get',
+                    data:'',
+                    success:function (data) {
+                        $('#stat').text(data['data'])
+                    }
+                }
+            )
+        }
+
+        )
+    }
+    )
+</script>
 </body>
 </html>
 
