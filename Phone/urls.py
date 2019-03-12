@@ -27,8 +27,23 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^index/$', views.index, name='index'),
     url(r'^login/$', views.login, name='login'),
-    url(r'^products/$', views.products, name='products'),
-    url(r'^product_details/$', views.product_details, name='product_details'),
+    url(r'^logout/$', views.logout, name='logout'),
+    url(r'^products/(?P<products_id>\d+)/$', views.products, name='products'),
+    url(r'^product_details/(?P<product_id>\d+)/$', views.product_details, name='product_details'),
     url(r'^register/$', views.register, name='register'),
     url(r'^sendmessage/$', views.sendMessage, name='sendmessage'),
+]
+
+'''
+urlpatterns += [
+    url(r'^products/(\d+)/$', views.products, name='products'),
+]
+'''
+urlpatterns += [
+    url(r'^cart/$', views.cart, name='cart'),
+    url(r'^addtobuycar/(?P<product_id>\d+)/$', views.addToBuycar, name='addtobuycar'),
+    url(r'^cart/delete_car_goods/(?P<product_id>\d+)/$', views.delete_car_goods, name='delete_car_goods'),
+    url(r'^enterorder/$', views.enterorder, name='enterorder'),
+    url(r'^buyers/enterpay/$', views.enterpay, name='entrypay'),
+    url(r'^buyers/payVerify/(?P<num>\d+)/$', views.payVerify),
 ]

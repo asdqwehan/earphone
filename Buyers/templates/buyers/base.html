@@ -18,6 +18,14 @@
 	<link rel="stylesheet" href="/static/buyers/css/style.css" />
 	<link rel="stylesheet" href="/static/buyers/css/responsive.css" />
 	<link rel="stylesheet" href="/static/buyers/css/ic-helpers.min.css" />
+	<style>
+		.loginbotton {
+			font-size: 16px;
+			width: 40px;
+			display: inline-block;
+			margin-left: -2px;
+		}
+	</style>
 </head>
 <body>
 
@@ -29,12 +37,22 @@
 			<img src="/static/buyers/img/logo.png" alt="" />
 		</a>
 
+		{% if request.session.username %}
+		<div class="nav-item">
+			<a href="" class="text-primary">
+				<i class="fas fa-user-circle fa-2x"></i>
+				{{ request.session.username }}
+			</a>
+			<a class="loginbotton" href="/logout/">登出</a>
+		</div>
+		{% else %}
 		<div class="nav-item">
 			<a href="/login/" class="text-primary">
 				<i class="fas fa-user-circle fa-2x"></i>
+				<span class="loginbotton" href="">登陆</span>
 			</a>
 		</div>
-
+		{% endif %}
 		<div class="nav-item">
 			<a href="/buyers/cart/" class="text-primary">
 				<i class="fas fa-shopping-bag fa-2x"></i>
@@ -76,19 +94,20 @@
 		</div>
 
 		<ul>
-			<li><a href="/products.html">Over-ear <img src="/static/buyers/img/icon-headphones.png" class="h-30 align-middle m-l-20" alt="" /></a></li>
-			<li><a href="/products.html">On-ear <img src="/static/buyers/img/icon-headphones.png" class="h-30 align-middle m-l-20" alt="" /></a></li>
-			<li><a href="/products.html">In-ear <img src="/static/buyers/img/icon-headphones.png" class="h-30 align-middle m-l-20" alt="" /></a></li>
-			<li><a href="/products.html">Accessories <img src="static/buyers/img/icon-headphones.png" class="h-30 align-middle m-l-20" alt="" /></a></li>
+			<li><a href="/products/0/">全部产品<img src="/static/buyers/img/icon-headphones.png" class="h-30 align-middle m-l-20" alt="" /></a></li>
+			<li><a href="/products/2/">头戴耳机<img src="/static/buyers/img/icon-headphones.png" class="h-30 align-middle m-l-20" alt="" /></a></li>
+			<li><a href="/products/3/">入耳耳机<img src="/static/buyers/img/icon-headphones.png" class="h-30 align-middle m-l-20" alt="" /></a></li>
+			<li><a href="/products/1/">蓝牙耳机<img src="/static/buyers/img/icon-headphones.png" class="h-30 align-middle m-l-20" alt="" /></a></li>
+			<li><a href="/products/4/">耳机线材<img src="/static/buyers/img/icon-headphones.png" class="h-30 align-middle m-l-20" alt="" /></a></li>
 
 			<li><hr class="m-tb-30" /></li>
 
-			<li><a href="/products.html">Products</a></li>
-			<li><a href="/product-details.html">Product Details</a></li>
-			<li><a href="#">About</a></li>
-			<li><a href="#">Blog</a></li>
-			<li><a href="#">Blog Post</a></li>
-			<li><a href="#">Contact</a></li>
+			<li><a href="/products/">产品</a></li>
+			<li><a href="/productsdetail/">产品详情</a></li>
+			<li><a href="#">关于</a></li>
+			<li><a href="#">博客</a></li>
+			<li><a href="#">博客站点</a></li>
+			<li><a href="#">联系我</a></li>
 		</ul>
 
 		<div class="social-media-box">
@@ -319,10 +338,14 @@
 	</div>
 	<!-- Search overlay -->
 
-	<script src="plugins/jquery.min.js"></script>
-	<script src="plugins/bootstrap/bootstrap.min.js"></script>
+	<script src="/static/buyers/plugins/jquery.min.js"></script>
+	<script src="/static/buyers/plugins/bootstrap/bootstrap.min.js"></script>
 
-	<script src="js/global.js"></script>
+	<script src="/static/buyers/plugins/bxslider/bxslider.min.js"></script>
+	<script src="/static/buyers/js/hm.js"></script>
+	<script src="/static/buyers/js/bootstrap-toggle.min.js"></script>
+	
+	<script src="/static/buyers/js/global.js"></script> <!-- *页面全局要素* -->
 	<script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
 <script>
     $(function () {
@@ -343,6 +366,33 @@
         )
     }
     )
+</script>
+<script>
+	$(function () {
+		$('.quantity').focus(function () {
+		   num1 = $(this).val();
+		});
+
+		$('.quantity').blur(function () {
+			var goods_allprice = $(this).parent().parent().parent().children('td').eq(4).children('strong');
+			var goods_price = $(this).parent().parent().parent().children('td').eq(2).children('strong').text();
+			var num2 = $(this).val();
+
+			if(Number(num2) >= 1){
+				var num = num2-num1;
+				goods_allprice.text(Number(goods_price)*Number(num2));
+				var newtoal = Number($('.alltotal').text())+Number(goods_price)*Number(num);
+				$('.alltotal').text(newtoal)
+			}
+			else {
+				num2 = $(this).val(1);
+				var num=1-num1;
+				goods_allprice.text(Number(goods_price));
+				var newtoal = Number($('.alltotal').text())+Number(goods_price)*Number(num);
+				$('.alltotal').text(newtoal)
+			}
+		})
+	})
 </script>
 </body>
 </html>

@@ -14,24 +14,25 @@
 				<div class="m-b-70 clearfix hidden-xs hidden-sm"></div>
 
 				<div class="col-sm-12 m-t-70">
-					<form>
+					<form method="POST" action="">
+						{% csrf_token %}
 						<div class="row">
 							<div class="col-xs-12 col-sm-4 col-sm-push-4">
 								<div class="form-group form-group-default required">
-									<label>Email</label>
+									<label>邮箱</label>
 									<input type="text" name="email" class="form-control" required />
 								</div>
 
 								<div class="form-group form-group-default required">
-									<label>Password</label>
+									<label>密码</label>
 									<input type="password" name="password" class="form-control" required />
 								</div>
 
+								<p style="color: red;">{{ result.data }}</p>
 								<div class="form-group text-center m-t-40">
-									<button type="submit" class="btn btn-success"><i class="fas fa-unlock"></i>&nbsp; Sign In</button>
-
+									<input type="submit" class="btn btn-success" value="登陆">
 									<p class="small m-t-20">
-										Not registered? <a href="http://demo.intelcoder.net/staro/register.html" class="text-success">Create an account</a>
+										没有账号？ <a href="/register/" class="text-success">立即注册</a>
 									</p>
 								</div>
 							</div>

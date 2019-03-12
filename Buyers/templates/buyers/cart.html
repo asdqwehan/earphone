@@ -12,7 +12,8 @@
 				</div>
 
 				<div class="col-sm-12 m-t-70">
-					<form class="form-horizontal">
+					<form class="form-horizontal" method="POST" action='/enterorder/'>
+						{% csrf_token %}
 						<table class="table table-hover">
 							<thead>
 								<tr>
@@ -25,6 +26,7 @@
 							</thead>
 
 							<tbody>
+								{% for goods in buycarGoods %}
 								<tr>
 									<td class="col-sm-1 hidden-xs">
 										<a href="#" class="thumbnail m-b-0">
@@ -33,67 +35,72 @@
 									</td>
 
 									<td class="col-sm-4">
-										<h4 class="m-b-5"><a href="#">Staro-Two</a></h4>
-										<h6>ST-T A100</h6>
+										<h4 class="m-b-5"><a href="#">{{ goods.goods_name }}</a></h4>
+										<h6>{{ js.goods_id }}</h6>
 									</td>
 
-									<td class="col-sm-2 text-center"><strong>$290.00</strong></td>
+									<td class="col-sm-2 text-center"><strong>{{ goods.goods_price }}</strong>RMB</td>
 
 									<td class="col-sm-2 text-center">
 										<div class="input-group">
 											<span class="input-group-addon hidden-sm">
-												<input type="button" name="qty_minus" class="btn-qty" value="-" data-field="quantity" />
+												<input type="button" name="qty_minus" class="btn-qty qty_minus" value="-" data-field="quantity" />
 											</span>
 
-											<input type="text" name="quantity" class="form-control text-center" value="3" />
+											<input type="text" name="quantity" class="form-control text-center" value="{{ goods.goods_num }}" />
 
 											<span class="input-group-addon hidden-sm">
-												<input type="button" name="qty_plus" class="btn-qty" value="+" data-field="quantity" />
+												<input type="button" name="qty_plus" class="btn-qty qty_plus" value="+" data-field="quantity" />
 											</span>
 										</div>
 									</td>
 
-									<td class="col-sm-2 text-center"><strong>$870.00</strong></td>
+									<td class="col-sm-2 text-center"><strong>{% widthratio goods.goods_num 1 goods.goods_price %}</strong></td>
+									
 
 									<td class="col-sm-1 text-center">
-										<a href="#" class="btn btn-primary btn-square btn-sm"><i class="fas fa-times"></i></a>
+										<a href="/cart/delete_car_goods/{{ goods.id }}" class="btn btn-primary btn-square btn-sm"><i class="fas fa-times"></i></a>
 									</td>
 								</tr>
-
+								{% endfor %}
+								<!--
 								<tr>
 									<td class="col-sm-1 hidden-xs">
 										<a href="#" class="thumbnail m-b-0">
-											<img src="/static/buyers/img/products/product10.png" alt="" />
+											<img src="/static/buyers/img/products/product3.png" alt="" />
 										</a>
 									</td>
 
 									<td class="col-sm-4">
-										<h4 class="m-b-5"><a href="#">Staro-One</a></h4>
-										<h6>ST-O S2000</h6>
+										<h4 class="m-b-5"><a href="#">{{ goods.goods_name }}</a></h4>
+										<h6>{{ js.goods_id }}</h6>
 									</td>
 
-									<td class="col-sm-2 text-center"><strong>$149.00</strong></td>
+									<td class="col-sm-2 text-center"><strong>{{ goods.goods_price }}</strong>RMB</td>
 
 									<td class="col-sm-2 text-center">
 										<div class="input-group">
 											<span class="input-group-addon hidden-sm">
-												<input type="button" name="qty_minus" class="btn-qty" value="-" data-field="quantity" />
+												<input type="button" name="qty_minus" class="btn-qty qty_minus" value="-" data-field="quantity" />
 											</span>
 
-											<input type="text" name="quantity" class="form-control text-center" value="2" />
+											<input type="text" name="quantity" class="form-control text-center" value="{{ goods.goods_num }}" />
 
 											<span class="input-group-addon hidden-sm">
-												<input type="button" name="qty_plus" class="btn-qty" value="+" data-field="quantity" />
+												<input type="button" name="qty_plus" class="btn-qty qty_plus" value="+" data-field="quantity" />
 											</span>
 										</div>
 									</td>
 
-									<td class="col-sm-2 text-center"><strong>$298.00</strong></td>
+									<td class="col-sm-2 text-center"><strong>{{ total }}</strong></td>
 
 									<td class="col-sm-1 text-center">
 										<a href="#" class="btn btn-primary btn-square btn-sm"><i class="fas fa-times"></i></a>
 									</td>
 								</tr>
+								-->
+
+								
 							</tbody>
 
 							<tfoot>
@@ -102,8 +109,8 @@
 								</tr>
 
 								<tr>
-									<td colspan="3" class="b-t-0">Shipping and discounts will be calculated at checkout</td>
-									<td colspan="3" class="b-t-0 text-right"><h3 class="m-b-0">Total&nbsp; $1168.00</h3></td>
+									<td colspan="3" class="b-t-0">运费和折扣将在结算时计算</td>
+									<td colspan="3" class="b-t-0 text-right"><h3 class="m-b-0 alltotal">{{ alltotal }}</h3>RMB</td>
 								</tr>
 
 								<tr>
@@ -115,7 +122,7 @@
 										<a href="index.html" class="btn btn-default">Continue Shopping</a>
 									</td>
 									<td colspan="3" class="b-t-0 text-right">
-										<a href="http://demo.intelcoder.net/staro/checkout.html" class="btn btn-success"><i class="fas fa-shopping-bag"></i>&nbsp; Proceed to Checkout</a>
+										<input type="submit" class="btn btn-success" value="去结算"><i class="fas fa-shopping-bag"></i>&nbsp;</a>
 									</td>
 								</tr>
 							</tfoot>
